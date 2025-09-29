@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block  titulo %}Acerca de{% endblock  %}
+{% block body %}
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h4>Misión</h4>
+                </div>
+                <div class="card-body">
+                    <p>Nuestra misión es impulsar el crecimiento tecnológico ofreciendo productos y servicios innovadores que generen valor y confianza en nuestros clientes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white">
+                    <h4>Visión</h4>
+                </div>
+                <div class="card-body">
+                    <p>Ser líderes en el sector tecnológico, reconocidos por nuestra excelencia, ética profesional y compromiso con el desarrollo sostenible.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h4>Valores</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-horizontal-md">
+                        <li class="list-group-item flex-fill text-center">Innovación</li>
+                        <li class="list-group-item flex-fill text-center">Responsabilidad</li>
+                        <li class="list-group-item flex-fill text-center">Transparencia</li>
+                        <li class="list-group-item flex-fill text-center">Trabajo en equipo</li>
+                        <li class="list-group-item flex-fill text-center">Respeto</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h4>Nuestro Equipo</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Miembro del equipo">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Joel Martínez</h5>
+                                    <p class="card-text">Fundador & CEO</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Miembro del equipo">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Ana López</h5>
+                                    <p class="card-text">Desarrolladora Principal</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <div class="card">
+                                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Miembro del equipo">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Carlos Pérez</h5>
+                                    <p class="card-text">Diseñador UX/UI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-center">Nuestro equipo está formado por profesionales apasionados y comprometidos con la excelencia.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card border-secondary">
+                <div class="card-header bg-secondary text-white">
+                    <h4>Historia</h4>
+                </div>
+                <div class="card-body">
+                    <p>Desde nuestros inicios en 2020, hemos trabajado arduamente para posicionarnos como una empresa referente en el sector tecnológico. Cada año, hemos ampliado nuestro equipo y mejorado nuestros servicios para adaptarnos a las necesidades cambiantes del mercado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Acerca de Nosotros</h1>
+                    <p class="card-text">
+                        Bienvenido a nuestra página. Somos un equipo dedicado a proporcionar soluciones innovadoras y de calidad. Nuestro objetivo es satisfacer las necesidades de nuestros clientes y contribuir al desarrollo tecnológico.
+                    </p>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item">Equipo profesional y apasionado</li>
+                        <li class="list-group-item">Compromiso con la excelencia</li>
+                        <li class="list-group-item">Enfoque en el cliente</li>
+                    </ul>
+                    <p class="card-text">
+                        Si deseas saber más sobre nosotros o tienes alguna pregunta, no dudes en <a href="{{ url_for('contacto') }}">contactarnos</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

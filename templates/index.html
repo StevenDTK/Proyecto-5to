@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}Prueba{% endblock title %}
+{% block body%}
+<!--Carrusel de imagenes-->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{url_for('static', filename='img/Img1.avif')}}"
+                style="width:1400px; height:338px; object-fit:cover;" class="d-block mx-auto" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='img/Img2.jpg')}}"
+                style="width:1400px; height:338px; object-fit:cover;" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='img/Img3.jpg')}}"
+                style="width:1400px; height:338px; object-fit:cover;" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<!--Informacion-->
+<div class="container my-5">
+    <h3 class="text-center mb-4">INFORMACIóN</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">¿Qué es un servicio técnico?</h5>
+                    <p class="card-text">Un servicio técnico es una entidad o un conjunto de actividades dedicadas a la
+                        reparación, mantenimiento, instalación y soporte de equipos, sistemas o productos para asegurar
+                        su correcto funcionamiento y resolver incidencias. Estos servicios son cruciales para la
+                        funcionalidad diaria de los aparatos tecnológicos y se ofrecen a través de diferentes medios,
+                        como la asistencia presencial o remota, y son proporcionados por profesionales capacitados. </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Funciones principales</h5>
+                    <p class="card-text">
+                        Mantenimiento preventivo y correctivo:
+                        Realizan tareas programadas para evitar fallas y reparaciones cuando ocurren averías.
+                        Reparación de averías:
+                        Solucionan problemas y fallas en el hardware o software de los equipos.
+                        Instalación y configuración:
+                        Se encargan de la correcta instalación y puesta en marcha de equipos y sistemas.
+                        Soporte técnico:
+                        Brindan asistencia a los usuarios para resolver dudas y hacer un uso óptimo de los productos o
+                        servicios.
+                        Modificaciones y actualizaciones:
+                        Realizan ajustes o cambios necesarios para mejorar el rendimiento o la funcionalidad de los
+                        equipos.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Importancia</h5>
+                    <p class="card-text">Prolongar la vida útil:
+                        Ayudan a mantener los equipos en buen estado, extendiendo su vida útil.
+                        Garantizar la funcionalidad:
+                        Aseguran que los productos tecnológicos funcionen correctamente y de manera eficiente.
+                        Solución de problemas:
+                        Ofrecen un canal para que los usuarios obtengan ayuda cuando enfrentan problemas técnicos.
+                        Mejora de la productividad:
+                        Al mantener los equipos en buen funcionamiento, contribuyen a la continuidad de los procesos y
+                        la productividad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Servicios-->
+<div class="container my-5">
+    <h3 class="text-center mb-4">SERVICIOS</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <img src="{{url_for('static', filename='img/servicio1.png')}}"
+                    class="card-img-top rounded-circle mx-auto d-block mt-3"
+                    style="width:180px; height:180px; object-fit:cover;" alt="ventas">
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
+                    <a href="#" class="btn btn-primary">Reparacion</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <img src="{{url_for('static', filename='img/servicio2.png')}}"
+                    class="card-img-top rounded-circle mx-auto d-block mt-3"
+                    style="width:180px; height:180px; object-fit:cover;" alt="productos">
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                    <a href="#" class="btn btn-primary">Limpieza</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <img src="{{url_for('static', filename='img/servicio3.png')}}"
+                    class="card-img-top rounded-circle mx-auto d-block mt-3"
+                    style="width:180px; height:180px; object-fit:cover;" alt="carrito">
+                <div class="card-body text-center">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
+                    <a href="#" class="btn btn-primary">Mantenimiento</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+{% endblock %}
