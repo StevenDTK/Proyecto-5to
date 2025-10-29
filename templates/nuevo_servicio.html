@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nuevo Servicio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  {% extends 'base.html' %}
+  {% block titulo %}Nuevo Servicio{% endblock %}
+
+  {% block body %}
+  <div class="container py-4">
+    <h1 class="mb-4">Agregar Nuevo Servicio</h1>
+
+    <form id="form-nuevo-servicio" method="post">
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input class="form-control" name="nombre" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" name="descripcion" rows="3"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Precio</label>
+        <input class="form-control" name="precio" type="number" step="0.01" min="0">
+      </div>
+      <button class="btn btn-success" type="submit">Crear</button>
+      <a class="btn btn-secondary" href="{{ url_for('listar_servicios_agregados') }}">Cancelar</a>
+    </form>
+  </div>
+
+  <script>
+    // flashes como toasts
+    const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+    if (Array.isArray(flashes) && flashes.length) {
+      flashes.forEach(function(item) {
+        const category = item[0], message = item[1];
+        Swal.fire({ toast: true, position: 'top-end', icon: category === 'success' ? 'success' : (category === 'danger' ? 'error' : (category === 'warning' ? 'warning' : 'info')), title: message, showConfirmButton: false, timer: 2500, timerProgressBar: true });
+      });
+    }
+
+    // Confirmar creación de servicio
+    document.getElementById('form-nuevo-servicio').addEventListener('submit', function(e){
+      e.preventDefault();
+      const form = this;
+      Swal.fire({
+        title: 'Crear servicio?',
+        text: 'Se guardará un nuevo servicio en la base de datos.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, crear',
+        cancelButtonText: 'Cancelar'
+      }).then(function(result){
+        if (result.isConfirmed) form.submit();
+      });
+    });
+  </script>
+  {% endblock %}
+</body>
+</html>

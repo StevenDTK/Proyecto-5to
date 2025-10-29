@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Registrar Servicio para Cliente</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  {% extends 'base.html' %}
+  {% block title %}Registrar Servicio para Cliente{% endblock %}
+
+  {% block body %}
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="mb-0">Registrar Servicio para Cliente</h1>
+      <div>
+        <a class="btn btn-success" href="{{ url_for('nuevo_servicio') }}">Agregar nuevo servicio</a>
+        <a class="btn btn-secondary" href="{{ url_for('admin') }}">Volver al panel</a>
+      </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% if servicio %}
+      <!-- Formulario para asignar el servicio seleccionado -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">{{ servicio.nombre }}</h5>
+          <p class="card-text">{{ servicio.descripcion }}</p>
+          <p><strong>Precio:</strong> C$ {{ servicio.precio }}</p>
+        </div>
+      </div>
+
+      <form method="POST">
+        <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+
+        <div class="mb-3">
+          <label class="form-label">Nombre del cliente</label>
+          <input class="form-control" name="cliente_nombre" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Teléfono</label>
+          <input class="form-control" name="telefono" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción (uso del servicio)</label>
+          <textarea class="form-control" name="descripcion_cliente" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <a class="btn btn-secondary" href="{{ url_for('listar_servicios_agregados') }}">Volver al catálogo</a>
+      </form>
+
+    {% else %}
+      <!-- Lista de servicios para seleccionar -->
+      {% if servicios %}
+        <div class="row g-3">
+          {% for s in servicios %}
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">{{ s.nombre }}</h5>
+                  <p class="card-text">{{ s.descripcion }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                  <small class="text-muted">C$ {{ s.precio }}</small>
+                  <div class="btn-group">
+                    <a href="{{ url_for('listar_servicios_agregados') }}?id={{ s.id }}" class="btn btn-sm btn-success">Seleccionar</a>
+                    <a href="{{ url_for('editar_servicio', id=s.id) }}" class="btn btn-sm btn-primary">Editar</a>
+                    <form action="{{ url_for('eliminar_servicio', id=s.id) }}" method="post" style="display:inline;">
+                      <button type="submit" class="btn btn-sm btn-danger btn-delete">Borrar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info">No hay servicios disponibles.</div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <script>
+     const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+    if (Array.isArray(flashes) && flashes.length) {
+      flashes.forEach(function(item) {
+        const category = item[0], message = item[1];
+        Swal.fire({ toast: true, position: 'top-end', icon: category === 'success' ? 'success' : (category === 'danger' ? 'error' : (category === 'warning' ? 'warning' : 'info')), title: message, showConfirmButton: false, timer: 2500, timerProgressBar: true });
+      });
+    }
+
+    document.querySelectorAll('.btn-delete').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const form = this.closest('form');
+        Swal.fire({
+          title: '¿Eliminar este servicio?',
+          text: "Esta acción no se puede revertir",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then(function(result) { if (result.isConfirmed) form.submit(); });
+      });
+    });
+  </script>
+  {% endblock %}
+</body>
+</html>

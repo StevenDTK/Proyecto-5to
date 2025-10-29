@@ -3,36 +3,98 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Servicios</title>
+  <title>Servicios Agregados</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+  {% extends 'base.html' %}
+  {% block titulo %}Servicios Agregados{% endblock %}
+
+  {% block body %}
   <div class="container py-4">
-    <h1 class="mb-4">Servicios Disponibles</h1>
+    <h1 class="mb-4">Servicios Registrados para Clientes</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}" role="alert" style="display:none;">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
 
     {% if servicios %}
-      <div class="row g-3">
+      <div class="row">
         {% for s in servicios %}
-          <div class="col-md-4">
-            <div class="card h-100">
+          <div class="col-md-6 mb-3">
+            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">{{ s.nombre }}</h5>
-                <p class="card-text">{{ s.descripcion }}</p>
-              </div>
-              <div class="card-footer">
-                {% if s.precio %}
-                  <strong>Precio:</strong> C$ {{ s.precio }}
+                <h5 class="card-title">{{ s.servicio_nombre }} <small class="text-muted">— Cliente: {{ s.cliente_nombre }}</small></h5>
+                <p class="card-text">{{ s.servicio_descripcion }}</p>
+                <p class="mb-1"><strong>Precio:</strong> C$ {{ s.servicio_precio }}</p>
+                <p class="mb-1"><strong>Teléfono:</strong> {{ s.telefono }}</p>
+                {% if s.descripcion_cliente %}
+                  <p class="mb-1"><strong>Notas cliente:</strong> {{ s.descripcion_cliente }}</p>
                 {% endif %}
+                <small class="text-muted">Registrado: {{ s.creado_at }}</small>
+              </div>
+              <div class="card-footer d-flex justify-content-between">
+                <a href="{{ url_for('editar_servicio_agregado', id=s.id) }}" class="btn btn-sm btn-primary">Editar</a>
+                <form action="{{ url_for('eliminar_servicio_agregado', id=s.id) }}" method="post" style="margin:0;">
+                  <button type="submit" class="btn btn-sm btn-danger btn-delete">Borrar</button>
+                </form>
               </div>
             </div>
           </div>
         {% endfor %}
       </div>
     {% else %}
-      <div class="alert alert-info">No hay servicios disponibles.</div>
+      <div class="alert alert-info">No hay servicios registrados para clientes.</div>
     {% endif %}
 
     <a class="btn btn-secondary mt-4" href="{{ url_for('admin') }}">Volver al panel</a>
   </div>
+
+  <script>
+    // serializar flashes de forma segura
+    const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+
+    if (Array.isArray(flashes) && flashes.length) {
+      flashes.forEach(function(item) {
+        const category = item[0], message = item[1];
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          icon: category === 'success' ? 'success' : (category === 'danger' ? 'error' : (category === 'warning' ? 'warning' : 'info')),
+          title: message,
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true
+        });
+      });
+    }
+
+    // confirmación SweetAlert para eliminar
+    document.querySelectorAll('.btn-delete').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const form = this.closest('form');
+        Swal.fire({
+          title: '¿Eliminar este servicio asignado?',
+          text: "Esta acción no se puede revertir",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then(function(result) {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
+  </script>
+  {% endblock %}
 </body>
 </html>
