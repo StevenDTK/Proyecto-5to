@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block titulo %}Catálogo de Servicios{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Catálogo de Servicios</h1>
+    <a class="btn btn-secondary" href="{{ url_for('usuario_dashboard') }}">Volver</a>
+  </div>
+
+  {% if servicio %}
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ servicio.nombre }}</h5>
+        <p class="card-text">{{ servicio.descripcion }}</p>
+        <p><strong>Precio:</strong> C$ {{ servicio.precio }}</p>
+      </div>
+    </div>
+
+    <form method="post" id="form-solicitar-servicio">
+      <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
+      <div class="mb-3">
+        <label class="form-label">Nombre (autocompletado)</label>
+        <input class="form-control" value="{{ session.get('nombre') }}" disabled>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input class="form-control" name="telefono" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" name="descripcion_cliente" rows="3"></textarea>
+      </div>
+      <button class="btn btn-success" type="submit">Solicitar</button>
+      <a class="btn btn-secondary" href="{{ url_for('catalogo_servicios_usuario') }}">Volver al catálogo</a>
+    </form>
+
+  {% else %}
+    <div class="row g-3">
+      {% for s in servicios %}
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ s.nombre }}</h5>
+              <p class="card-text">{{ s.descripcion }}</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <small class="text-muted">C$ {{ s.precio }}</small>
+              <a href="{{ url_for('catalogo_servicios_usuario') }}?id={{ s.id }}" class="btn btn-sm btn-success">Seleccionar</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<script>
+ const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+  if (Array.isArray(flashes) && flashes.length) { flashes.forEach(function(item){ const cat=item[0], msg=item[1]; Swal.fire({toast:true,position:'top-end',icon: cat==='success'?'success':(cat==='danger'?'error':(cat==='warning'?'warning':'info')),title: msg,showConfirmButton:false,timer:2200}); }); }
+
+  // confirmar solicitud
+  const formSol = document.getElementById('form-solicitar-servicio');
+  if (formSol) {
+    formSol.addEventListener('submit', function(e){
+      e.preventDefault();
+      const form = this;
+      Swal.fire({ title: 'Confirmar solicitud?', text: 'Se registrará la solicitud con su nombre.', icon: 'question', showCancelButton:true, confirmButtonText:'Sí, solicitar' }).then(function(res){ if(res.isConfirmed) form.submit(); });
+    });
+  }
+</script>
+{% endblock %}

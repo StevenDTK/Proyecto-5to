@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block titulo %}Mi Perfil{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <h1 class="mb-4">Mi Perfil</h1>
+
+  <form method="post" id="form-perfil">
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input class="form-control" name="nombre" value="{{ usuario.nombre }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input class="form-control" name="email" value="{{ usuario.email }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contraseña (dejar en blanco para no cambiar)</label>
+      <input class="form-control" name="password" type="password">
+    </div>
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    <a class="btn btn-secondary" href="{{ url_for('usuario_dashboard') }}">Cancelar</a>
+  </form>
+</div>
+
+<script>
+ const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+  if (Array.isArray(flashes) && flashes.length) {
+    flashes.forEach(function(item){ const cat=item[0], msg=item[1]; Swal.fire({toast:true,position:'top-end',icon: cat==='success'?'success':(cat==='danger'?'error':(cat==='warning'?'warning':'info')),title: msg,showConfirmButton:false,timer:2200}); });
+  }
+</script>
+{% endblock %}

@@ -28,7 +28,14 @@
           <div class="col-md-6 mb-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">{{ s.servicio_nombre }} <small class="text-muted">— Cliente: {{ s.cliente_nombre }}</small></h5>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title">{{ s.servicio_nombre }} <small class="text-muted">— Cliente: {{ s.cliente_nombre }}</small></h5>
+                  <span class="badge 
+                    {% if s.estado == 'Solicitado' %}bg-primary{% elif s.estado == 'En proceso' %}bg-warning text-dark
+                    {% elif s.estado == 'Completado' %}bg-success{% elif s.estado == 'Cancelado' %}bg-danger{% else %}bg-secondary{% endif %}">
+                    {{ s.estado }}
+                  </span>
+                </div>
                 <p class="card-text">{{ s.servicio_descripcion }}</p>
                 <p class="mb-1"><strong>Precio:</strong> C$ {{ s.servicio_precio }}</p>
                 <p class="mb-1"><strong>Teléfono:</strong> {{ s.telefono }}</p>
@@ -37,11 +44,24 @@
                 {% endif %}
                 <small class="text-muted">Registrado: {{ s.creado_at }}</small>
               </div>
-              <div class="card-footer d-flex justify-content-between">
+
+              <div class="card-footer d-flex justify-content-between align-items-center">
                 <a href="{{ url_for('editar_servicio_agregado', id=s.id) }}" class="btn btn-sm btn-primary">Editar</a>
-                <form action="{{ url_for('eliminar_servicio_agregado', id=s.id) }}" method="post" style="margin:0;">
-                  <button type="submit" class="btn btn-sm btn-danger btn-delete">Borrar</button>
-                </form>
+
+                <div class="d-flex gap-2 align-items-center">
+                  <form action="{{ url_for('actualizar_estado', id=s.id) }}" method="post" class="m-0">
+                    <select name="estado" class="form-select form-select-sm" onchange="this.form.submit()">
+                      <option value="Solicitado" {% if s.estado=='Solicitado' %}selected{% endif %}>Solicitado</option>
+                      <option value="En proceso" {% if s.estado=='En proceso' %}selected{% endif %}>En proceso</option>
+                      <option value="Completado" {% if s.estado=='Completado' %}selected{% endif %}>Completado</option>
+                      <option value="Cancelado" {% if s.estado=='Cancelado' %}selected{% endif %}>Cancelado</option>
+                    </select>
+                  </form>
+
+                  <form action="{{ url_for('eliminar_servicio_agregado', id=s.id) }}" method="post" style="margin:0;">
+                    <button type="submit" class="btn btn-sm btn-danger btn-delete">Borrar</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

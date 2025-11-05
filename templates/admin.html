@@ -56,21 +56,19 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <div class="card-body text-white">
-
                                     <h5 class="card-title">Perfil del Usuario</h5>
-                                    <!-- p class="card-text">Mostrar registro de usuarios</p> -->
-                                    <a href="{{ url_for('listar')}}" class="btn btn-outline-success">Ver
-                                        Detalles</a>
+                                    <p class="card-text">Usuarios registrados: <span class="badge bg-light text-dark">{{ num_users }}</span></p>
+                                    <a href="{{ url_for('listar')}}" class="btn btn-outline-success">Ver Detalles</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 align-content-center">
-                            <img src="{{ url_for('static', filename='img/user.png') }}" class="img-fluid rounded-start"
-                                alt="Agregar Usuario ...">
+                            <img src="{{ url_for('static', filename='img/user.png') }}" class="img-fluid rounded-start" alt="Agregar Usuario ...">
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="card" style="background: linear-gradient(180deg, #042bf1,#367cd9,#ffffff);">
                     <div class="row g-0">
@@ -78,21 +76,19 @@
                             <div class="card-body">
                                 <div class="card-body text-white">
                                     <h5 class="card-title">Registrar Servicio</h5>
-                                    <!-- <p class="card-text">Agregar los productos al sistema</p> -->
-                                    <a href="{{ url_for('listar_servicios_agregados') }}"
-                                        class="btn btn-outline-success">Ver
-                                        Detalles</a>
+                                    <p class="card-text">Servicios disponibles: <span class="badge bg-light text-dark">{{ num_servicios }}</span></p>
+                                    <a href="{{ url_for('listar_servicios_agregados') }}" class="btn btn-outline-success">Ver Detalles</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 align-content-center">
                             <a href="{{ url_for('listar_servicios_agregados') }}">
-                                <img src="{{ url_for('static', filename='img/agregarp.png') }}"
-                                    class="img-fluid rounded-start" alt="..."></a>
+                                <img src="{{ url_for('static', filename='img/agregarp.png') }}" class="img-fluid rounded-start" alt="..."></a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="card" style="background: linear-gradient(180deg, #0b235c,#3d85a9,#e0f7ff);">
                     <div class="row g-0">
@@ -100,16 +96,13 @@
                             <div class="card-body">
                                 <div class="card-body text-white">
                                     <h5 class="card-title">Visualizar Servicios</h5>
-                                    <!-- <p class="card-text">Muestra lista de productos</p> -->
-                                    <a href="{{ url_for('listar_servicios') }}" class="btn btn-outline-success">Ver
-                                        Detalles</a>
+                                    <p class="card-text">Solicitudes totales: <span class="badge bg-light text-dark">{{ num_solicitados }}</span></p>
+                                    <a href="{{ url_for('listar_servicios') }}" class="btn btn-outline-success">Ver Detalles</a>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-md-4 align-content-center">
-                            <img src="{{ url_for('static', filename='img/listarp.png') }}"
-                                class="img-fluid rounded-start" alt="...">
+                            <img src="{{ url_for('static', filename='img/listarp.png') }}" class="img-fluid rounded-start" alt="...">
                         </div>
                     </div>
                 </div>

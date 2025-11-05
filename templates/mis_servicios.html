@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block titulo %}Mis Servicios{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <h1 class="mb-4">Mis Servicios</h1>
+
+  {% if servicios %}
+    <div class="row">
+      {% for s in servicios %}
+        <div class="col-md-6 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">{{ s.servicio_nombre }}</h5>
+                <span class="badge {% if s.estado=='Solicitado' %}bg-primary{% elif s.estado=='En proceso' %}bg-warning text-dark{% elif s.estado=='Completado' %}bg-success{% elif s.estado=='Cancelado' %}bg-danger{% else %}bg-secondary{% endif %}">{{ s.estado }}</span>
+              </div>
+              <p class="card-text">{{ s.servicio_descripcion }}</p>
+              <p class="mb-1"><strong>Precio:</strong> C$ {{ s.servicio_precio }}</p>
+              <p class="mb-1"><strong>Teléfono:</strong> {{ s.telefono }}</p>
+              {% if s.descripcion_cliente %}<p class="mb-1"><strong>Notas:</strong> {{ s.descripcion_cliente }}</p>{% endif %}
+              <small class="text-muted">Registrado: {{ s.creado_at }}</small>
+            </div>
+            <div class="card-footer d-flex justify-content-end">
+              {% if s.estado != 'Cancelado' and s.estado != 'Completado' %}
+                <form action="{{ url_for('cancelar_servicio', id=s.id) }}" method="post" style="margin:0;">
+                  <button type="submit" class="btn btn-sm btn-danger btn-cancel">Cancelar</button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">No tienes servicios registrados.</div>
+  {% endif %}
+
+  <a class="btn btn-secondary mt-3" href="{{ url_for('usuario_dashboard') }}">Volver</a>
+</div>
+
+<script>
+  const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+  if (Array.isArray(flashes) && flashes.length) { flashes.forEach(function(item){ const cat=item[0], msg=item[1]; Swal.fire({toast:true,position:'top-end',icon: cat==='success'?'success':(cat==='danger'?'error':(cat==='warning'?'warning':'info')),title: msg,showConfirmButton:false,timer:2200}); }); }
+
+  document.querySelectorAll('.btn-cancel').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      const form = this.closest('form');
+      Swal.fire({ title:'Confirmar cancelación?', text:'Se marcará este servicio como Cancelado.', icon:'warning', showCancelButton:true, confirmButtonText:'Sí, cancelar' }).then(function(res){ if(res.isConfirmed) form.submit(); });
+    });
+  });
+</script>
+{% endblock %}

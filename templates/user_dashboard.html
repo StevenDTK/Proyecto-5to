@@ -1,0 +1,30 @@
+{% extends 'baseadmin.html' %}
+{% block title %}Panel Usuario{% endblock %}
+{% block body %}
+<div class="container py-4">
+  <h1 class="mb-4">Panel de Usuario</h1>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="list-group">
+        <a class="list-group-item list-group-item-action" href="{{ url_for('perfil') }}">
+          Mi perfil <span class="badge bg-secondary float-end">{{ num_users if num_users is defined else '' }}</span>
+        </a>
+        <a class="list-group-item list-group-item-action" href="{{ url_for('catalogo_servicios_usuario') }}">
+          Ver catálogo de servicios <span class="badge bg-secondary float-end">{{ num_servicios }}</span>
+        </a>
+        <a class="list-group-item list-group-item-action" href="{{ url_for('mis_servicios') }}">
+          Mis servicios <span class="badge bg-secondary float-end">{{ num_mis_solicitudes }}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card p-4">
+        <h5>Bienvenido, {{ session.get('nombre') }}</h5>
+        <p>Desde aquí puedes ver el catálogo y gestionar tus solicitudes (solo cancelar).</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

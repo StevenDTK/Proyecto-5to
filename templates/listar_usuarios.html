@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block titulo %}Usuarios Registrados{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Usuarios</h1>
+    <a class="btn btn-primary" href="{{ url_for('crearusuario') }}">Crear usuario</a>
+  </div>
+
+  {% if usuarios %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in usuarios %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.id_rol }}</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('editar_usuario', id=u.id) }}">Editar</a>
+                <form action="{{ url_for('eliminar_usuario', id=u.id) }}" method="post" style="display:inline-block; margin-left:6px;">
+                  <button type="submit" class="btn btn-sm btn-danger btn-delete">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No hay usuarios registrados.</div>
+  {% endif %}
+
+  <a class="btn btn-secondary mt-3" href="{{ url_for('admin') }}">Volver al panel</a>
+</div>
+
+<script>
+  const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+  if (Array.isArray(flashes) && flashes.length) {
+    flashes.forEach(function(item) {
+      const category = item[0], message = item[1];
+      Swal.fire({ toast: true, position: 'top-end', icon: category === 'success' ? 'success' : (category === 'danger' ? 'error' : (category === 'warning' ? 'warning' : 'info')), title: message, showConfirmButton: false, timer: 2500, timerProgressBar: true });
+    });
+  }
+
+  document.querySelectorAll('.btn-delete').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const form = this.closest('form');
+      Swal.fire({
+        title: '¿Eliminar este usuario?',
+        text: "Esta acción eliminará al usuario definitivamente.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then(function(result) {
+        if (result.isConfirmed) form.submit();
+      });
+    });
+  });
+</script>
+{% endblock %}

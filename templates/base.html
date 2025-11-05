@@ -17,93 +17,91 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Sistema</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('inicio') }}">Sistema</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarScroll">
-                    <div class="w-100 d-flex justify-content-center align-items-center gap-4">
-                        <ul class="navbar-nav my-2 my-lg-0 navbar-nav-scroll mx-auto"
-                            style="--bs-scroll-height: 100px;">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{url_for('inicio') }}">Inicio</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('contacto') }}">Contacto</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('acercaDe') }}">Acerca de</a>
-                            </li>
 
-                        </ul>
-                        <form class="d-flex ms-auto">
-                            <a class="btn btn-outline-success" href="{{url_for('login') }}">Login</a>
-                        </form>
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('inicio') }}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('listar') }}">Usuarios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('listar_servicios') }}">Servicios</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center">
+                        {% if session.get('logueado') %}
+                        <span class="navbar-text text-light me-2">{{ session.get('nombre') }}</span>
+                        <a class="btn btn-outline-danger" href="{{ url_for('logout') }}">SALIR</a>
+                        {% else %}
+                        <a class="btn btn-outline-success" href="{{ url_for('login') }}">Login</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </nav>
-        </nav>
+    </header>
 
-        {% block body %}
+    {% block body %}
+    {% endblock %}
 
-        {% endblock %}
-
-        <!--Footer-->
-        <footer class="bg-dark text-light pt-4 pb-2 mt-5">
-            <div class="container">
-                <div class="row text-center text-md-start">
-                    <div class="col-md-3 mb-3">
-                        <h5 class="fw-bold">APP SYSTEM</h5>
-                        <p class="mb-0">Juigalpa, chontales</p>
-                        <p>Nicaragua</p>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h6 class="fw-bold">Servicios</h6>
-                        <ul class="list-unstyled">
-                            <li>Mantenimiento</li>
-                            <li>Reparación</li>
-                            <li>Limpieza</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h6 class="fw-bold">Links</h6>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-light text-decoration-none">Terms &amp; Conditions</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h6 class="fw-bold">Contacto</h6>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-light text-decoration-none"><i class="bi bi-facebook"></i>
-                                    Facebook</a></li>
-                            <li><a href="#" class="text-light text-decoration-none"><i class="bi bi-instagram"></i>
-                                    Instagram</a></li>
-                        </ul>
-                    </div>
+    <!--Footer-->
+    <footer class="bg-dark text-light pt-4 pb-2 mt-5">
+        <div class="container">
+            <div class="row text-center text-md-start">
+                <div class="col-md-3 mb-3">
+                    <h5 class="fw-bold">APP SYSTEM</h5>
+                    <p class="mb-0">Juigalpa, chontales</p>
+                    <p>Nicaragua</p>
                 </div>
-                <hr class="bg-secondary">
-                <div class="text-center pb-2">
-                    &copy; Copyright - All rights reserver 2025
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Servicios</h6>
+                    <ul class="list-unstyled">
+                        <li>Mantenimiento</li>
+                        <li>Reparación</li>
+                        <li>Limpieza</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Contacto</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none"><i class="bi bi-facebook"></i>
+                                Facebook</a></li>
+                        <li><a href="#" class="text-light text-decoration-none"><i class="bi bi-instagram"></i>
+                                Instagram</a></li>
+                    </ul>
                 </div>
             </div>
-        </footer>
+            <hr class="bg-secondary">
+            <div class="text-center pb-2">
+                &copy; Copyright - All rights reserver 2025
+            </div>
+        </div>
+    </footer>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Bootstrap JavaScript Libraries -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js"></script>
-        
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.23.0/dist/sweetalert2.all.min.js"></script>
+
 </body>
 
 </html>

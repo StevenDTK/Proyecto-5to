@@ -63,11 +63,9 @@ icons.min.css">
                         </li>
                     </ul>
                     <!-- Mostrar nombre de usuario registrado -->
-
-                    {% if session['nombre'] %}
+                    {% if session.get('nombre') %}
                     <span class="navbar-text text-light ms-2">
-                        <!-- Bienvenido: -->
-                        {{ session['nombre'] }}
+                        {{ session.get('nombre') }}
                     </span>
                     {% endif %}
                     <a class="btn btn-outline-success" href="{{ url_for('logout') }}">SALIR</a>

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar Usuario{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <h1 class="mb-4">Editar Usuario</h1>
+
+  <form id="form-editar-usuario" method="post">
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input class="form-control" name="email" value="{{ usuario.email }}" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contraseña (dejar en blanco para no cambiar)</label>
+      <input class="form-control" name="password" type="password" placeholder="Nueva contraseña">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Rol</label>
+      <select name="id_rol" class="form-select">
+        <option value="1" {% if usuario.id_rol==1 %}selected{% endif %}>Admin (1)</option>
+        <option value="2" {% if usuario.id_rol==2 %}selected{% endif %}>Usuario (2)</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar cambios</button>
+    <a class="btn btn-secondary" href="{{ url_for('listar') }}">Cancelar</a>
+  </form>
+</div>
+
+<script>
+  const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+  if (Array.isArray(flashes) && flashes.length) {
+    flashes.forEach(function(item) {
+      const category = item[0], message = item[1];
+      Swal.fire({ toast: true, position: 'top-end', icon: category === 'success' ? 'success' : (category === 'danger' ? 'error' : (category === 'warning' ? 'warning' : 'info')), title: message, showConfirmButton: false, timer: 2500, timerProgressBar: true });
+    });
+  }
+
+  document.getElementById('form-editar-usuario').addEventListener('submit', function(e){
+    e.preventDefault();
+    const form = this;
+    Swal.fire({
+      title: 'Guardar cambios?',
+      text: 'Se actualizarán los datos del usuario.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, guardar',
+      cancelButtonText: 'Cancelar'
+    }).then(function(result){
+      if (result.isConfirmed) form.submit();
+    });
+  });
+</script>
+{% endblock %}

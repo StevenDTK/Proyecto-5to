@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block titulo %}Crear usuario{% endblock %}
+
+{% block body %}
+<div class="container py-4">
+  <h1 class="mb-4">Crear usuario</h1>
+
+  <form method="post" id="form-crear-usuario">
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input class="form-control" name="email" type="email" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contraseña</label>
+      <input class="form-control" name="password" type="password" required>
+    </div>
+    <button class="btn btn-success" type="submit">Crear</button>
+    <a class="btn btn-secondary" href="{{ url_for('login') }}">Cancelar</a>
+  </form>
+</div>
+
+<script>
+ const flashes = JSON.parse('{{ get_flashed_messages(with_categories=True) | tojson | safe }}');
+  if (Array.isArray(flashes) && flashes.length) {
+    flashes.forEach(function(item){
+      const cat = item[0], msg = item[1];
+      Swal.fire({ toast:true, position:'top-end', icon: cat==='success'?'success':(cat==='danger'?'error':(cat==='warning'?'warning':'info')), title: msg, showConfirmButton:false, timer:2200 });
+    });
+  }
+
+  // confirmación antes de enviar
+  const form = document.getElementById('form-crear-usuario');
+  form && form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const f = this;
+    Swal.fire({
+      title: 'Crear usuario?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, crear'
+    }).then(r => { if (r.isConfirmed) f.submit(); });
+  });
+</script>
+{% endblock %}
