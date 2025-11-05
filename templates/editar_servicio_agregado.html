@@ -25,15 +25,18 @@
     <form id="form-editar-servicio-agregado" method="post">
       <div class="mb-3">
         <label class="form-label">Nombre del cliente</label>
-        <input class="form-control" name="cliente_nombre" value="{{ registro.cliente_nombre }}" required>
+        <input class="form-control" name="cliente_nombre" value="{{ registro.cliente_nombre }}"
+               data-bs-toggle="tooltip" title="Nombre del cliente propietario de la solicitud.">
       </div>
       <div class="mb-3">
         <label class="form-label">Teléfono</label>
-        <input class="form-control" name="telefono" value="{{ registro.telefono }}" required>
+        <input class="form-control" name="telefono" value="{{ registro.telefono }}"
+               data-bs-toggle="tooltip" title="Número de contacto del cliente.">
       </div>
       <div class="mb-3">
         <label class="form-label">Descripción (notas cliente)</label>
-        <textarea class="form-control" name="descripcion_cliente" rows="3">{{ registro.descripcion_cliente }}</textarea>
+        <textarea class="form-control" name="descripcion_cliente" rows="3"
+                  data-bs-toggle="tooltip" title="Notas adicionales proporcionadas por el cliente.">{{ registro.descripcion_cliente }}</textarea>
       </div>
 
       <button class="btn btn-primary" type="submit">Guardar cambios</button>

@@ -8,11 +8,13 @@
   <form method="post" id="form-crear-usuario">
     <div class="mb-3">
       <label class="form-label">Email</label>
-      <input class="form-control" name="email" type="email" required>
+      <input class="form-control" name="email" type="email" required
+             data-bs-toggle="tooltip" title="Introduce un correo válido que usarás para iniciar sesión.">
     </div>
     <div class="mb-3">
       <label class="form-label">Contraseña</label>
-      <input class="form-control" name="password" type="password" required>
+      <input class="form-control" name="password" type="password" required
+             data-bs-toggle="tooltip" title="Contraseña segura (recomendado: 6+ caracteres, mezcla letras y números).">
     </div>
     <button class="btn btn-success" type="submit">Crear</button>
     <a class="btn btn-secondary" href="{{ url_for('login') }}">Cancelar</a>

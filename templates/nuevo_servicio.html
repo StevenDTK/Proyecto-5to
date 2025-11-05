@@ -17,15 +17,18 @@
     <form id="form-nuevo-servicio" method="post">
       <div class="mb-3">
         <label class="form-label">Nombre</label>
-        <input class="form-control" name="nombre" required>
+        <input class="form-control" name="nombre" required
+               data-bs-toggle="tooltip" title="Nombre corto del servicio (p. ej. Corte de cabello).">
       </div>
       <div class="mb-3">
         <label class="form-label">Descripción</label>
-        <textarea class="form-control" name="descripcion" rows="3"></textarea>
+        <textarea class="form-control" name="descripcion" rows="3"
+                  data-bs-toggle="tooltip" title="Descripción detallada del servicio."></textarea>
       </div>
       <div class="mb-3">
         <label class="form-label">Precio</label>
-        <input class="form-control" name="precio" type="number" step="0.01" min="0">
+        <input class="form-control" name="precio" type="number" step="0.01" min="0"
+               data-bs-toggle="tooltip" title="Precio en moneda local (usar punto decimal).">
       </div>
       <button class="btn btn-success" type="submit">Crear</button>
       <a class="btn btn-secondary" href="{{ url_for('listar_servicios_agregados') }}">Cancelar</a>

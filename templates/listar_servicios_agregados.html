@@ -40,18 +40,20 @@
 
       <form method="POST">
         <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
-
         <div class="mb-3">
           <label class="form-label">Nombre del cliente</label>
-          <input class="form-control" name="cliente_nombre" required>
+          <input class="form-control" name="cliente_nombre" value="{{ session.get('nombre') }}" required
+                 data-bs-toggle="tooltip" title="Nombre del cliente que recibirá el servicio.">
         </div>
         <div class="mb-3">
           <label class="form-label">Teléfono</label>
-          <input class="form-control" name="telefono" required>
+          <input class="form-control" name="telefono" required
+                 data-bs-toggle="tooltip" title="Teléfono de contacto (ej. 555-1234).">
         </div>
         <div class="mb-3">
           <label class="form-label">Descripción (uso del servicio)</label>
-          <textarea class="form-control" name="descripcion_cliente" rows="3"></textarea>
+          <textarea class="form-control" name="descripcion_cliente" rows="3"
+                    data-bs-toggle="tooltip" title="Describe cómo usará el servicio o notas adicionales."></textarea>
         </div>
         <button class="btn btn-primary" type="submit">Guardar</button>
         <a class="btn btn-secondary" href="{{ url_for('listar_servicios_agregados') }}">Volver al catálogo</a>

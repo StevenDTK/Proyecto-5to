@@ -1,30 +1,35 @@
-{% extends 'baseadmin.html' %}
-{% block title %}Panel Usuario{% endblock %}
+{% extends 'base.html' %}
+{% block titulo %}Panel Usuario{% endblock %}
+
 {% block body %}
 <div class="container py-4">
-  <h1 class="mb-4">Panel de Usuario</h1>
+  <h2 class="text-center mb-4">Panel de Usuario</h2>
 
-  <div class="row">
-    <div class="col-md-4">
-      <div class="list-group">
-        <a class="list-group-item list-group-item-action" href="{{ url_for('perfil') }}">
-          Mi perfil <span class="badge bg-secondary float-end">{{ num_users if num_users is defined else '' }}</span>
-        </a>
-        <a class="list-group-item list-group-item-action" href="{{ url_for('catalogo_servicios_usuario') }}">
-          Ver catálogo de servicios <span class="badge bg-secondary float-end">{{ num_servicios }}</span>
-        </a>
-        <a class="list-group-item list-group-item-action" href="{{ url_for('mis_servicios') }}">
-          Mis servicios <span class="badge bg-secondary float-end">{{ num_mis_solicitudes }}</span>
-        </a>
+  <div class="row justify-content-center g-4">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+      <div class="card h-100 text-center" style="background: linear-gradient(180deg, #042bf1,#367cd9,#ffffff);">
+        <div class="card-body">
+          <h5 class="card-title">Catálogo de Servicios</h5>
+          <p class="card-text">Explora los servicios disponibles.</p>
+          <a href="{{ url_for('catalogo_servicios_usuario') }}" class="btn btn-success">Ver catálogo</a>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-8">
-      <div class="card p-4">
-        <h5>Bienvenido, {{ session.get('nombre') }}</h5>
-        <p>Desde aquí puedes ver el catálogo y gestionar tus solicitudes (solo cancelar).</p>
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+      <div class="card h-100 text-center" style="background: linear-gradient(180deg, #355e3b, #7a9f7a, #f1eeda);">
+        <div class="card-body">
+          <h5 class="card-title">Mis Servicios</h5>
+          <p class="card-text">Ver tus solicitudes registradas.</p>
+          <a href="{{ url_for('mis_servicios') }}" class="btn btn-primary">Ver mis servicios</a>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="card p-4 mt-4">
+    <h5 class="mb-0">Bienvenido, {{ session.get('nombre') }}</h5>
+    <p class="mb-0">Desde aquí puedes ver el catálogo y gestionar tus solicitudes (solo cancelar).</p>
   </div>
 </div>
 {% endblock %}

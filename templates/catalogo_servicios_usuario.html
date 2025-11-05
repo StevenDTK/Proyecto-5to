@@ -21,15 +21,18 @@
       <input type="hidden" name="servicio_id" value="{{ servicio.id }}">
       <div class="mb-3">
         <label class="form-label">Nombre (autocompletado)</label>
-        <input class="form-control" value="{{ session.get('nombre') }}" disabled>
+        <input class="form-control" value="{{ session.get('nombre') }}" disabled
+               data-bs-toggle="tooltip" title="Nombre tomado de tu sesión.">
       </div>
       <div class="mb-3">
         <label class="form-label">Teléfono</label>
-        <input class="form-control" name="telefono" required>
+        <input class="form-control" name="telefono" required
+               data-bs-toggle="tooltip" title="Número de contacto para la solicitud.">
       </div>
       <div class="mb-3">
         <label class="form-label">Descripción</label>
-        <textarea class="form-control" name="descripcion_cliente" rows="3"></textarea>
+        <textarea class="form-control" name="descripcion_cliente" rows="3"
+                  data-bs-toggle="tooltip" title="Notas o detalles sobre tu solicitud."></textarea>
       </div>
       <button class="btn btn-success" type="submit">Solicitar</button>
       <a class="btn btn-secondary" href="{{ url_for('catalogo_servicios_usuario') }}">Volver al catálogo</a>

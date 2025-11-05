@@ -473,46 +473,6 @@ def usuario_dashboard():
                            num_servicios=num_servicios,
                            num_mis_solicitudes=num_mis_solicitudes)
 
-@app.route('/perfil', methods=['GET', 'POST'])
-def perfil():
-    if not session.get('logueado') or session.get('id_rol') != 2:
-        flash('Acceso no autorizado', 'warning')
-        return redirect(url_for('login'))
-
-    user_id = session.get('id')
-    cursor = mysql.connection.cursor()
-    try:
-        if request.method == 'POST':
-            nombre = request.form.get('nombre')
-            email = request.form.get('email')
-            password = request.form.get('password')
-
-            if not email:
-                flash('Email requerido', 'warning')
-                return redirect(url_for('perfil'))
-
-            if password:
-                cursor.execute("UPDATE usuario SET nombre=%s, email=%s, password=%s WHERE id=%s",
-                               (nombre, email, password, user_id))
-            else:
-                cursor.execute("UPDATE usuario SET nombre=%s, email=%s WHERE id=%s",
-                               (nombre, email, user_id))
-            mysql.connection.commit()
-            session['nombre'] = nombre if nombre else email
-            flash('Perfil actualizado', 'success')
-            return redirect(url_for('perfil'))
-        else:
-            cursor.execute("SELECT id, nombre, email FROM usuario WHERE id = %s LIMIT 1", (user_id,))
-            usuario = cursor.fetchone()
-            return render_template('perfil.html', usuario=usuario)
-    except Exception as e:
-        mysql.connection.rollback()
-        print("Error en perfil:", e)
-        flash('Ocurrió un error', 'danger')
-        return redirect(url_for('usuario_dashboard'))
-    finally:
-        cursor.close()
-
 @app.route('/catalogo_servicios_usuario', methods=['GET', 'POST'])
 def catalogo_servicios_usuario():
     if not session.get('logueado') or session.get('id_rol') != 2:
