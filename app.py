@@ -564,3 +564,6 @@ def cancelar_servicio(id):
     finally:
         cursor.close()
     return redirect(url_for('mis_servicios'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
